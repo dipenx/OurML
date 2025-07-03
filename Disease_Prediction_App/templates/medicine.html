@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medicine Recommendation | SDS HealthCare AI</title>
+
+  <!-- External Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="/">
+      <i class="fas fa-capsules me-2"></i> Medicine Recommendation 
+    </a>
+    <span class="text-muted fw-bold small">SDS HealthCare AI</span>
+    <div id="google_translate_element" class="ms-auto"></div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container my-5">
+  <div class="card p-4 shadow mx-auto" style="max-width: 600px;">
+    <h2 class="text-center text-primary fw-bold mb-4 animate__animated animate__fadeInDown">
+      💊 FIND MEDICATION BY DISEASE
+    </h2>
+    <div class="mb-3">
+      <input type="text" id="disease-input" class="form-control" placeholder="Enter disease..." />
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary px-4" id="lookup-btn">
+        <i class="fas fa-search me-2"></i> Search
+      </button>
+    </div>
+    <div id="result" class="mt-4"></div>
+     <!-- Back to Home Button -->
+     <div class="text-center mt-3">
+        <a href="/" class="btn btn-outline-dark mt-3">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Footer -->
+<footer class="footer text-center mt-5 py-3">
+  <p class="mb-0">© 2025 SDS HealthCare AI | Developed by SDS Tech Dev.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,bn,sat',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  let diseases = [];
+
+  $(document).ready(function() {
+    // Autocomplete suggestions
+    $.getJSON('/get_diseases', function(data) {
+      diseases = data;
+      $("#disease-input").autocomplete({ source: diseases });
+    });
+
+    // On Search Button Click
+    $("#lookup-btn").click(function() {
+      const disease = $("#disease-input").val().trim();
+      if (!disease) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Input Required',
+          text: 'Please enter a disease name.',
+        });
+        return;
+      }
+
+      $.ajax({
+        url: "/get_medication",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ disease: disease }),
+        success: function(response) {
+          if (response.medication) {
+            $("#result").html(`
+              <div class="alert alert-success animate__animated animate__fadeIn">
+                <strong>Recommended Medication:</strong> ${response.medication}
+              </div>`);
+          } else {
+            $("#result").html(`
+              <div class="alert alert-danger animate__animated animate__shakeX">
+                No medication found for <strong>${disease}</strong>.
+              </div>`);
+          }
+        },
+        error: function() {
+          $("#result").html(`
+            <div class="alert alert-danger animate__animated animate__shakeX">
+              An error occurred while fetching medication. Please try again later.
+            </div>`);
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

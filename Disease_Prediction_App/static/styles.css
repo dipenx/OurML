@@ -1,0 +1,186 @@
+/* Import Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
+/* General Layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #021B79, #0575E6);
+    font-family: "Poppins", sans-serif;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Header Styling */
+.header {
+    padding: 2rem 9%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #bbdefb;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+    font-size: 1.8rem;
+    color: #021B79;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.header .logo i {
+    color: #0575E6;
+    padding: 8px;
+}
+
+/* Container Centering */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 5px; /* For header offset */
+}
+
+/* Card Styling */
+.card {
+    width: 900px;
+    max-width: 100%;
+    margin: auto;
+    border-radius: 15px;
+    padding: 25px;
+    background: url(bg2.jpg) no-repeat center center;
+    background-size: cover;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Text */
+.card h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 16px;
+    color: #252a2d;
+}
+
+/* Input Styles */
+input {
+    border: 2px solid #0575E6;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Button Styling */
+button {
+    transition: 0.3s;
+    padding: 12px 18px;
+    background-color: #0575E6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #021B79;
+}
+
+/* Result Display */
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #ffeb3b;
+}
+
+/* Footer */
+.footer {
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    width: 100%;
+    margin-top: auto;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Branding */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #0575E6;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+    color: #E91E63;
+}
+
+/* Loading Overlay */
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    text-align: center;
+    padding-top: 20%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem 5%;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header .logo {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .card {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
